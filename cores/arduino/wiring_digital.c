@@ -28,13 +28,13 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 	{
 		return;
 	}
-	5 GPIO_TypeDef *gpio_port = g_APinDescription[ulPin].pPort;
-	6 uint16_t gpio_pin = 1 << (g_APinDescription[ulPin].ulPin & 0xF);
+	GPIO_TypeDef *gpio_port = g_APinDescription[ulPin].pPort;
+	uint16_t gpio_pin = 1 << (g_APinDescription[ulPin].ulPin & 0xF);
 
-	7 GPIO_InitTypeDef GPIO_InitStructure;
-	8 RCC_AHBPeriphClockCmd(g_APinDescription[ulPin].ulPeripheral,ENABLE);
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_AHBPeriphClockCmd(g_APinDescription[ulPin].ulPeripheral,ENABLE);
 	
-	9 GPIO_InitStructure.GPIO_Pin = gpio_pin;
+	GPIO_InitStructure.GPIO_Pin = gpio_pin;
 	GPIO_InitStructure.GPIO_Mode = g_APinDescription[ulPin].ulPinPuPd;
 	
 	switch(ulMode)
