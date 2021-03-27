@@ -1,0 +1,85 @@
+
+name=Seeed Studio Grove Zero Node Boards
+version=1.0.0
+
+# STM32 compile variables
+# ----------------------
+compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
+compiler.c.cmd=arm-none-eabi-gcc
+compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -Dprintf=iprintf
+compiler.c.elf.cmd=arm-none-eabi-g++
+compiler.c.elf.flags=-Os -Wl,--gc-sections
+compiler.S.flags=-c -g -x assembler-with-cpp
+compiler.cpp.cmd=arm-none-eabi-g++
+compiler.cpp.flags=-c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -Dprintf=iprintf
+compiler.ar.cmd=arm-none-eabi-ar
+compiler.ar.flags=rcs
+compiler.objcopy.cmd=arm-none-eabi-objcopy
+compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+compiler.elf2hex.flags=-O binary
+compiler.elf2hex.cmd=arm-none-eabi-objcopy
+compiler.ldflags=-mcpu={build.mcu} -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align
+compiler.size.cmd=arm-none-eabi-size
+compiler.define=-DARDUINO=
+
+# this can be overriden in boards.txt
+build.extra_flags=
+
+compiler.libsam.c.flags="-I{build.system.path}/libstm32" "-I{build.system.path}/CMSIS/Include/" "-I{build.system.path}/CMSIS/Device/MM/" "-I{build.system.path}/libstm32/MM32F0xx/inc" "-I{build.system.path}/CMSIS/Device/MM/MM32F0xx/Include"
+
+# USB Flags
+# ---------
+build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DUSBCON '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+
+# Default usb manufacturer will be replaced at compile time using
+# numeric vendor ID if available or by board's specific value. 
+build.usb_manufacturer="Seeed Studio"
+
+
+# STM32 compile patterns
+# ---------------------
+
+## Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mcpu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {build.extra_flags} {compiler.libsam.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mcpu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {build.extra_flags} {compiler.libsam.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Create archives
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
+
+## Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mcpu={build.mcu} "-T{build.variant.path}/{build.ldscript}" "-Wl,-Map,{build.path}/{build.project_name}.map" --specs=nano.specs --specs=nosys.specs {compiler.ldflags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -lm -lgcc -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -Wl,--warn-unresolved-symbols -Wl,--start-group "{build.path}/core/syscalls_stm32.c.o" {object_files} "{build.variant.path}/{build.variant_system_lib}" "{build.path}/{archive_file}" -Wl,--end-group
+
+## Create eeprom
+recipe.objcopy.eep.pattern=
+
+## Create hex
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+
+## Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=\.text\s+([0-9]+).*
+
+
+# STM32 Uploader tools
+# -------------------
+
+tools.stm32flash.cmd=stm32flash
+
+tools.stm32flash.cmd.windows=serial_upload.bat
+tools.stm32flash.cmd.macosx=serial_upload
+tools.stm32flash.cmd.linux=serial_upload
+tools.stm32flash.cmd.linux64=serial_upload
+
+tools.stm32flash.path.windows={runtime.tools.stm32_serial_upload_tool.path}/win
+tools.stm32flash.path.macosx={runtime.tools.stm32_serial_upload_tool.path}/macosx
+tools.stm32flash.path.linux={runtime.tools.stm32_serial_upload_tool.path}/linux
+tools.stm32flash.path.linux64={runtime.tools.stm32_serial_upload_tool.path}/linux64
+
+tools.stm32flash.upload.params.verbose= 
+tools.stm32flash.upload.params.quiet=
+
+#tools.stm32flash.upload.pattern="{path}/{cmd}" -e 15 -w "{build.path}/{build.project_name}.bin" -v -g 0x0 -b 115200 {serial.port}
+
+tools.stm32flash.upload.pattern="{path}/{cmd}" "{build.path}/{build.project_name}.bin" {serial.port}

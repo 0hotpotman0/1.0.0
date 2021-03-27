@@ -1,0 +1,34 @@
+77	1DE	A17	20D	1D0                     3	5B	73	4A	118
+color event:5	liner event:2           color event:5	liner event:3
+color value:FFFFFF	FFFFFF	Yes         color value:E1313	E1313	Yes
+178	1DE	A1B	20D	1D1                     83	5B	73	4A	119
+color event:5	liner event:2           color event:5	liner event:3
+color value:FFFFFF	FFFFFF	Yes         color value:E1313	E1313	Yes
+181	1E1	A1D	20F	1CC                     83	5B	73	49	11A
+color event:5	liner event:2           color event:5	liner event:3
+color value:FFFFFF	FFFFFF	Yes         color value:D1212	E1313	Yes
+17F	1E0	A19	20E	1CE                     68	4A	6E	3E	11C
+color event:5	liner event:2           color event:5	liner event:3
+
+
+
+
+
+
+e84658 aaf96b 2472de    
+
+
+BD	22	40	5B	1D	1E	23	16	6A5	12D	245	341	E8	11E	132	D6	
+95	1B	2F	46	16	14	1A	17	5D4	107	1DC	2C1	DE	D7	ED	DC	
+A1	1F	36	4B	19	14	1C	1E	654	129	20F	2F5	125	EA	10B	11A	
+A4	1F	38	4C	1B	18	1A	1B	669	12E	227	2FF	DA	124	F1	112	
+95	1B	33	4A	18	1D	21	25	5FA	10F	209	2F7	119	118	123	116	
+D9	23	47	6E	25	18	26	23	8B0	163	2D5	473	EE	111	14D	157	
+AD	20	37	4F	18	19	20	1C	6BB	132	229	322	F0	F9	139	116	
+
+
+
+
+
+
+
