@@ -28,6 +28,10 @@
 #ifndef __HAL_device_H
 #define __HAL_device_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #define MM32F031x4x6_q
 
 #if defined(MM32F031x4x6_q)
@@ -36,6 +40,11 @@
 #else
 #error "HAL_device.h: PART NUMBER undefined"
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* __HAL_device_H */
 
 /**

@@ -23,6 +23,10 @@
 #ifndef __HAL_MISC_H
 #define __HAL_MISC_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -119,6 +123,10 @@ typedef struct {
 void NVIC_Init(NVIC_InitTypeDef *NVIC_InitStruct);
 void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState);
 void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_MISC_H */
 

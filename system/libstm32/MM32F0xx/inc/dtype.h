@@ -21,6 +21,10 @@
 #ifndef _DTYPE_H_
 #define _DTYPE_H_
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #define __I volatile const
 #define __O volatile
 #define __IO volatile
@@ -54,6 +58,10 @@ typedef enum {ERROR = 0, SUCCESS = !ERROR} ErrorStatus;
 typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 #define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
 */
+#ifdef __cplusplus
+}
+#endif
+
 #endif //_DTYPE_H_
 /**
 * @}

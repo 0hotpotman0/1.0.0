@@ -139,9 +139,9 @@ void analogWrite(uint32_t ulPin, uint32_t ulValue)
 		{
 			RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 		}
-		else if(TIMx == TIM14)
+		else if(TIMx == TIM2)    //  else if(TIMx == TIM14)
 		{
-			RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM14, ENABLE);
+			RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);    //RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM14, ENABLE); 
 		}
 		
 		TIM_TimeBaseStructure.TIM_Prescaler = TimerPeriod;

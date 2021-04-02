@@ -23,6 +23,10 @@
 #ifndef __HAL_CRC_H
 #define __HAL_CRC_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -68,6 +72,10 @@ uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength);
 uint32_t CRC_GetCRC(void);
 void CRC_SetIDRegister(uint8_t IDValue);
 uint8_t CRC_GetIDRegister(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_CRC_H */
 /**

@@ -23,6 +23,10 @@
 #ifndef __HAL_PWR_H
 #define __HAL_PWR_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -136,6 +140,10 @@ void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry);
 void PWR_EnterSTANDBYMode(void);
 FlagStatus PWR_GetFlagStatus(uint32_t PWR_FLAG);
 void PWR_ClearFlag(uint32_t PWR_FLAG);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_PWR_H */
 /**

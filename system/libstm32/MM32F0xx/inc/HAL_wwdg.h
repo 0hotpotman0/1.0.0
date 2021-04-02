@@ -23,6 +23,10 @@
 #ifndef __HAL_WWDG_H
 #define __HAL_WWDG_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -88,6 +92,10 @@ void WWDG_SetCounter(uint8_t Counter);
 void WWDG_Enable(uint8_t Counter);
 FlagStatus WWDG_GetFlagStatus(void);
 void WWDG_ClearFlag(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_WWDG_H */
 

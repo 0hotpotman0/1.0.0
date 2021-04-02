@@ -23,6 +23,10 @@
 #ifndef __HAL_TIM_H
 #define __HAL_TIM_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -1083,6 +1087,10 @@ void TIM_ETRConfig(TIM_TypeDef *TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM
 void TIM_EncoderInterfaceConfig(TIM_TypeDef *TIMx, uint16_t TIM_EncoderMode,
                                 uint16_t TIM_IC1Polarity, uint16_t TIM_IC2Polarity);
 void TIM_SelectHallSensor(TIM_TypeDef *TIMx, FunctionalState NewState);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*__HAL_TIM_H */
 /**

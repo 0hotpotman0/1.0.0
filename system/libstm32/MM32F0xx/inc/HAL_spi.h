@@ -23,6 +23,10 @@
 #ifndef __HAL_SPI_H
 #define __HAL_SPI_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -383,6 +387,11 @@ ITStatus SPI_GetITStatus(SPI_TypeDef *SPIx, uint8_t SPI_IT);
 void SPI_ClearITPendingBit(SPI_TypeDef *SPIx, uint8_t SPI_IT);
 void SPI_RxBytes(SPI_TypeDef *SPIx, uint16_t Number);
 void SPI_SlaveAdjust(SPI_TypeDef *SPIx, uint16_t AdjustValue);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /*__HAL_SPI_H */
 /**
 * @}

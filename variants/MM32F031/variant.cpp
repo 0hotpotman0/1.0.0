@@ -18,8 +18,7 @@
 
 #include "variant.h"
 #ifdef __cplusplus
-extern "C"
-{
+extern "C"{
 #endif
 
 	// Pins descriptions
@@ -130,8 +129,7 @@ void serialEventRun(void)
 }
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 	void __libc_init_array(void);
@@ -139,20 +137,19 @@ extern "C"
 	void init(void)
 	{
 		SystemInit();
-		RCC->CR &= 0xFFFEFFFF;
+		// RCC->CR &= 0xFFFEFFFF;    //0x0000FF01 
 
 		// Set Systick to 1ms interval, common to all SAM3 variants
 		if (SysTick_Config(SystemCoreClock / 1000))
 		{
 			// Capture error
-			while (true)
-				;
+			while (1);
 		}
 		// Configure the SysTick Handler Priority: Preemption priority and subpriority
 		NVIC_SetPriority(SysTick_IRQn, 15);
 
 		// Initialize C library
-		__libc_init_array();
+		// __libc_init_array();
 
 		// Initialize Analog Controller
 		ADC_InitTypeDef ADC_InitStructure;
@@ -162,22 +159,23 @@ extern "C"
 
 		// ADC1 Periph clock enable
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
-		// Initialize ADC structure
+		// // Initialize ADC structure
 		ADC_StructInit(&ADC_InitStructure);
 
 		ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-		ADC_InitStructure.ADC_PRESCARE = ADC_PCLK2_PRESCARE_16; //ADC prescale factor
-		ADC_InitStructure.ADC_Mode = ADC_Mode_Continuous_Scan;	//Set ADC mode to continuous conversion mode
-		ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//AD data right-justified
 		ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
+		ADC_InitStructure.ADC_PRESCARE = ADC_PCLK2_PRESCARE_16; //ADC prescale factor
+		ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//AD data right-justified
+		ADC_InitStructure.ADC_Mode = ADC_Mode_Continuous_Scan;	//Set ADC mode to continuous conversion mode
+		
 		ADC_Init(ADC1, &ADC_InitStructure);
 
 		//Enable ADCDMA
 		ADC_Cmd(ADC1, ENABLE); //Enable AD conversion
 
+		ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 		// Wait the ADCEN falg
-		while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC))
-			;
+		while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
 	}
 
 #define BOOTLOADER_ADDRESS 0x1FFFEC00
@@ -205,7 +203,7 @@ extern "C"
 
 	uint8_t readBootFlag(void)
 	{
-		if (*(__IO uint32_t *)(0x1FFFF804) == 0xB34CBD42)
+		if (*(__IO uint32_t *)(0x1FFFF800) == 0xB34CBD42)
 			return true;
 		return false;
 	}

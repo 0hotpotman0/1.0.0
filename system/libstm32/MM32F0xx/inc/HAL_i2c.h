@@ -23,6 +23,10 @@
 #ifndef __HAL_I2C_H
 #define __HAL_I2C_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -294,6 +298,10 @@ void I2C_ClearFlag(I2C_TypeDef *I2Cx, uint32_t I2C_FLAG);
 ITStatus I2C_GetITStatus(I2C_TypeDef *I2Cx, uint32_t I2C_IT);
 void I2C_ClearITPendingBit(I2C_TypeDef *I2Cx, uint32_t I2C_IT);
 void I2C_ReadCmd(I2C_TypeDef *I2Cx);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*__HAL_I2C_H */
 /**

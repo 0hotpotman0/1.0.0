@@ -23,6 +23,10 @@
 #ifndef __HAL_RCC_H
 #define __HAL_RCC_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -295,6 +299,11 @@ void RCC_ClearITPendingBit(uint8_t RCC_IT);
 #define RCC_APB1Periph_UART              RCC_APB1Periph_UART2
 #define RCC_APB1Periph_I2C               RCC_APB1Periph_I2C1
 #define RCC_AHBPeriph_DMA                RCC_AHBPeriph_DMA1
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* __HAL_RCC_H */
 /**
 * @}

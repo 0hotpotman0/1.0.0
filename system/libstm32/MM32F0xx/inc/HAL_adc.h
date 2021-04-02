@@ -23,6 +23,9 @@
 #ifndef __HAL_ADC_H
 #define __HAL_ADC_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -385,6 +388,10 @@ ITStatus ADC_GetITStatus(ADC_TypeDef *ADCx, uint16_t ADC_IT);
 void ADC_ClearITPendingBit(ADC_TypeDef *ADCx, uint16_t ADC_IT);
 void ADC_TempSensorCmd(FunctionalState NewState);
 void ADC_VrefintCmd(FunctionalState NewState);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*__HAL_ADC_H */
 

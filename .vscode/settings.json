@@ -4,6 +4,7 @@
         "*.tcc": "cpp",
         "typeinfo": "cpp",
         "limits": "cpp",
-        "hal_tim.h": "c"
+        "hal_tim.h": "c",
+        "stdio.h": "c"
     }
 }

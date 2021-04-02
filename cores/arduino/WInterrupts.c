@@ -110,7 +110,7 @@ void attachInterrupt(uint32_t pin, void (*callback)(void), uint32_t mode, uint32
 	}
 	else if (gpio_port == GPIOD )
 	{
-		GPIO_PortSource = EXTI_PortSourceGPIOF;
+		GPIO_PortSource = EXTI_PortSourceGPIOD;   //   GPIO_PortSource = EXTI_PortSourceGPIOF;
 	}
 
 	// Connect EXTI Line to GPIO pin

@@ -24,6 +24,8 @@
 #ifndef __MM32F031x4x6_q_H
 #define __MM32F031x4x6_q_H
 
+
+
 /** @addtogroup Library_configuration_section
 * @{
 */
@@ -3364,4 +3366,5 @@ void assert_failed(uint8_t* file, uint32_t line);
 #define RCC_APB1ENR_UARTEN                  RCC_APB1ENR_UART2EN           /*!< UART 2 clock enable */
 #define RCC_APB1ENR_I2CEN                   RCC_APB1ENR_I2C1EN
 /*-------------------------(C) COPYRIGHT 2019 MindMotion ----------------------*/
+
 

@@ -29,6 +29,9 @@
 #ifndef __MM32F0XX_CONF_H
 #define __MM32F0XX_CONF_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
 /* Includes ------------------------------------------------------------------*/
 /* Comment the line below to disable peripheral header file inclusion */
 #include "dtype.h"
@@ -75,6 +78,10 @@
 #else
   #define assert_param(expr) ((void)0)
 #endif /* USE_FULL_ASSERT */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __STM32F0XX_CONF_H */
 

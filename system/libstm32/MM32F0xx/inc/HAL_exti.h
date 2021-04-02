@@ -23,6 +23,10 @@
 #ifndef __HAL_EXTI_H
 #define __HAL_EXTI_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -145,6 +149,10 @@ FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line);
 void EXTI_ClearFlag(uint32_t EXTI_Line);
 ITStatus EXTI_GetITStatus(uint32_t EXTI_Line);
 void EXTI_ClearITPendingBit(uint32_t EXTI_Line);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_EXTI_H */
 /**

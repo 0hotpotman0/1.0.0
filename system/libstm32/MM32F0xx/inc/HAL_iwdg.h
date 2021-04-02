@@ -23,6 +23,10 @@
 #ifndef __HAL_IWDG_H
 #define __HAL_IWDG_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -117,6 +121,10 @@ void IWDG_EnableIT(void);
 void IWDG_Reset(void);
 void IWDG_ClearIT(void);
 FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_IWDG_H */
 /**
