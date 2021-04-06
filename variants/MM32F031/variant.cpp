@@ -112,7 +112,7 @@ extern "C"{
 
 // USART objects
 RingBuffer rx_buffer1;
-USARTClass Serial(USART1, USART1_IRQn, 1, &rx_buffer1);
+USARTClass Serial(UART1, UART1_IRQn, 1, &rx_buffer1);
 void serialEvent() __attribute__((weak));
 void serialEvent() {}
 

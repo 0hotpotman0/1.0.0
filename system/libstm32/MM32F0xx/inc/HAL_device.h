@@ -31,10 +31,10 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
-typedef unsigned char u8;
-typedef unsigned short int u16;
-typedef unsigned int u32;
-typedef unsigned long int u64;
+// typedef unsigned char u8;
+// typedef unsigned short int u16;
+// typedef unsigned int u32;
+// typedef unsigned long int u64;
 #define MM32F031x4x6_q
 
 #if defined(MM32F031x4x6_q)
