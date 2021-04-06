@@ -35,32 +35,34 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 	RCC_AHBPeriphClockCmd(g_APinDescription[ulPin].ulPeripheral,ENABLE);
 	
 	GPIO_InitStructure.GPIO_Pin = gpio_pin;
-	GPIO_InitStructure.GPIO_Mode = g_APinDescription[ulPin].ulPinPuPd;
+	GPIO_InitStructure.GPIO_PuPd = g_APinDescription[ulPin].ulPinPuPd;
 	
 	switch(ulMode)
 	{
 		case INPUT:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 			break ;
 		
 		case INPUT_PULLUP:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 			break;
 			
 		case INPUT_PULLDOWN:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 			break;
 			
 		case OUTPUT:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 			break ;
 		
 		case ALTERNATE:
 			GPIO_PinAFConfig(gpio_port, g_APinDescription[ulPin].ulPin & 0xF, g_APinDescription[ulPin].ulPinAFMode);
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 			break;
 		case ANALOG:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 			break;
 
         default:
@@ -69,7 +71,7 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 
 	if(ulMode != ANALOG)
 	{
-		//GPIO_InitStructure.GPIO_Mode = g_APinDescription[ulPin].ulPinPuPd;
+		GPIO_InitStructure.GPIO_OType = g_APinDescription[ulPin].ulPinOType;
 		GPIO_InitStructure.GPIO_Speed = g_APinDescription[ulPin].ulPinSpeed;
 	}
 	

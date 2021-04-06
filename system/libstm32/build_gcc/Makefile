@@ -24,16 +24,16 @@ SUBMAKE_OPTIONS=--no-builtin-rules --no-builtin-variables --no-print-directory
 # Rules
 #-------------------------------------------------------------------------------
 
-# libstm_mm32f030_gcc_rel.a 
-#all: libstm_mm32f030_gcc_rel.a 
-all: libmm_mm32f031_gcc_rel.a 
+# libstm_stm32f030_gcc_rel.a 
+#all: libstm_stm32f030_gcc_rel.a 
+all: libstm_stm32f030_gcc_rel.a 
 
-.PHONY: libmm_mm32f031_gcc_rel.a
-libmm_mm32f031_gcc_rel.a:
+.PHONY: libstm_stm32f030_gcc_rel.a
+libstm_stm32f030_gcc_rel.a:
 	@echo ------------------------------------------------------------------------------------
 	@echo --- Making $@
 	@echo ---
-	@$(MAKE) CHIP=MM32F031 $(SUBMAKE_OPTIONS) OUTPUT_BIN=../../../variants/MM32F031 -f mm32.mk
+	@$(MAKE) CHIP=STM32F030 $(SUBMAKE_OPTIONS) OUTPUT_BIN=../../../variants/GroveTwo -f stm32.mk
 	@echo ------------------------------------------------------------------------------------
 
 
@@ -41,8 +41,8 @@ libmm_mm32f031_gcc_rel.a:
 clean:
 	@echo ------------------------------------------------------------------------------------
 
-	@echo --- Cleaning mm32f031 release and debug
-	@$(MAKE) CHIP=MM32F031 $(SUBMAKE_OPTIONS) -f mm32.mk $@
+	@echo --- Cleaning stm32f030 release and debug
+	@$(MAKE) CHIP=STM32F030 $(SUBMAKE_OPTIONS) -f stm32.mk $@
 	@echo ------------------------------------------------------------------------------------
 
 

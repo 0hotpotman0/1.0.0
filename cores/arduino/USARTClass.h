@@ -30,13 +30,13 @@ class USARTClass : public HardwareSerial
     RingBuffer *_rx_buffer;
 
   protected:
-    UART_TypeDef* _pUsart;
-	UART_InitTypeDef USART_InitStructure;
+    USART_TypeDef* _pUsart;
+	USART_InitTypeDef USART_InitStructure;
     IRQn_Type _dwIrq;
     uint32_t _dwId;
 
   public:
-    USARTClass(UART_TypeDef* pUsart, IRQn_Type dwIrq, uint32_t dwId, RingBuffer* pRx_buffer) ;
+    USARTClass(USART_TypeDef* pUsart, IRQn_Type dwIrq, uint32_t dwId, RingBuffer* pRx_buffer) ;
 
     void begin(const uint32_t dwBaudRate) ;
     void end(void) ;

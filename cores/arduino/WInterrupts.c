@@ -77,19 +77,19 @@ void attachInterrupt(uint32_t pin, void (*callback)(void), uint32_t mode, uint32
 	RCC_AHBPeriphClockCmd(g_APinDescription[pin].ulPeripheral,ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = gpio_pin;
-
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 	switch (pupd)
 	{
 		case INPUT:
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 		break;
 		
 		case INPUT_PULLUP:
-				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 		break;
 		
 		case INPUT_PULLDOWN:
-				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 		break;
 		
 		default:
@@ -108,9 +108,9 @@ void attachInterrupt(uint32_t pin, void (*callback)(void), uint32_t mode, uint32
 	{
 		GPIO_PortSource = EXTI_PortSourceGPIOB;
 	}
-	else if (gpio_port == GPIOD )
+	else if (gpio_port == GPIOF )
 	{
-		GPIO_PortSource = EXTI_PortSourceGPIOD;   //   GPIO_PortSource = EXTI_PortSourceGPIOF;
+		GPIO_PortSource = EXTI_PortSourceGPIOF;
 	}
 
 	// Connect EXTI Line to GPIO pin

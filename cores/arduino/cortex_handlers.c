@@ -17,35 +17,15 @@
 */
 
 #include "Arduino.h"
-#include "variant.h"
-#include "MM32F031x4x6_q.h"
 #include "Reset.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void delay_ms(uint32_t time)
-{    
-   uint32_t i=0;  
-   while(time--)
-   {
-      i=12000;  //自己定义
-      while(i--) ;    
-   }
-}
-
 static void __halt()
 {
-  digitalWrite(PA1, HIGH);
-	while(1) {
-	 //	digitalWrite(PA1, HIGH);
-		//delay_ms(500);
-	 	//digitalWrite(PA1, LOW);
-	 	//delay_ms(500);
-
-     }
-  
+	while (1);
 }
 
 extern void svcHook(void);
@@ -59,13 +39,12 @@ void MemManage_Handler (void) __attribute__ ((weak, alias("__halt")));
 void BusFault_Handler  (void) __attribute__ ((weak, alias("__halt")));
 void UsageFault_Handler(void) __attribute__ ((weak, alias("__halt")));
 void DebugMon_Handler  (void) __attribute__ ((weak, alias("__halt")));
-void SVC_Handler       (void) __attribute__ ((weak, alias("__halt")));
-void PendSV_Handler    (void) __attribute__ ((weak, alias("__halt")));
+void SVC_Handler       (void) { svcHook(); }
+void PendSV_Handler    (void) {	pendSVHook(); }
 
 void SysTick_Handler(void)
 {
-  // digitalWrite(PA1, LOW);
-	//if(sysTickHook())return;
+	if(sysTickHook())return;
 
 	// tickReset();
 
@@ -82,27 +61,27 @@ void RCC_IRQHandler                  (void) __attribute__ ((weak, alias("__halt"
 void EXTI0_1_IRQHandler              (void) __attribute__ ((weak, alias("__halt")));
 void EXTI2_3_IRQHandler              (void) __attribute__ ((weak, alias("__halt")));
 void EXTI4_15_IRQHandler             (void) __attribute__ ((weak, alias("__halt")));
-// void TS_IRQHandler                   (void) __attribute__ ((weak, alias("__halt")));
+void TS_IRQHandler                   (void) __attribute__ ((weak, alias("__halt")));
 void DMA1_Channel1_IRQHandler        (void) __attribute__ ((weak, alias("__halt")));
 void DMA1_Channel2_3_IRQHandler      (void) __attribute__ ((weak, alias("__halt")));
 void DMA1_Channel4_5_IRQHandler      (void) __attribute__ ((weak, alias("__halt")));
-void ADC1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));   // ADC1_COMP_IRQHandler 
+void ADC1_COMP_IRQHandler            (void) __attribute__ ((weak, alias("__halt")));
 void TIM1_BRK_UP_TRG_COM_IRQHandler  (void) __attribute__ ((weak, alias("__halt")));
 void TIM1_CC_IRQHandler              (void) __attribute__ ((weak, alias("__halt")));
 void TIM2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void TIM3_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
-// void TIM6_DAC_IRQHandler             (void) __attribute__ ((weak, alias("__halt")));
+void TIM6_DAC_IRQHandler             (void) __attribute__ ((weak, alias("__halt")));
 void TIM14_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
-// void TIM15_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
+void TIM15_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void TIM16_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void TIM17_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void I2C1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
-// void I2C2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
+void I2C2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void USART1_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
 void USART2_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
-// void CEC_IRQHandler                  (void) __attribute__ ((weak, alias("__halt")));
+void CEC_IRQHandler                  (void) __attribute__ ((weak, alias("__halt")));
 
 
 #ifdef __cplusplus

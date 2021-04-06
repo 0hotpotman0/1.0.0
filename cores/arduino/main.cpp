@@ -16,7 +16,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
+ 
 #define ARDUINO_MAIN
 #include "Arduino.h"
 
@@ -32,57 +32,30 @@ uint32_t GetTickCount(void)
 {
   return TimingMillis;
 }
-void delay_ms(uint32_t time)
-{    
-   uint32_t i=0;  
-   while(time--)
-   {
-      i=12000;  //自己定义
-      while(i--) ;    
-   }
-}
+
 /*
  * \brief Main entry point of Arduino application
  */
 int main( void )
-{  
-  
-	//init();
-  //  if (SysTick_Config(SystemCoreClock / 1000)) {
-  //       /* Capture error */
-  //       while (1);
-  //   }
-  //   /* Configure the SysTick handler priority */
-  //   NVIC_SetPriority(SysTick_IRQn, 0x0);    
-  //RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
-  pinMode(PA1, OUTPUT);
-  //digitalWrite(PA1, HIGH);
-  // digitalWrite(PA1, LOW);
-   while(1) {
-	 	digitalWrite(PA1, HIGH);
-		delay_ms(500);
-	 	digitalWrite(PA1, LOW);
-	 	delay_ms(500);
-		
-     }
-  while (1)
-  {
-    /* code */
-  }
-  
-// #if defined(USBCON)
-// //	USBDevice.attach();
-// #endif
-
-// 	// bootloader();
+{
 	
-// 	setup();
+	init();
 
-// 	for (;;)
-// 	{
-// 		loop();
-// 		if (serialEventRun) serialEventRun();
-// 	}
+	delay(1);
 
-// 	return 0;
+#if defined(USBCON)
+//	USBDevice.attach();
+#endif
+
+	bootloader();
+	
+	setup();
+
+	for (;;)
+	{
+		loop();
+		if (serialEventRun) serialEventRun();
+	}
+
+	return 0;
 }

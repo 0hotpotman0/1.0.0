@@ -47,25 +47,3 @@ GroveTwoNode031.build.variant=STM32F031
 GroveTwoNode031.build.variant_system_lib=libstm_stm32f031_gcc_rel.a
 GroveTwoNode031.build.vid=
 GroveTwoNode031.build.pid=
-
-# Grove Zero Node(MM32F031)
-# ---------------------------------------
-GroveTwoNodeMM031.name=Grove Zero Node(MM32F031)
-GroveTwoNodeMM031.vid.0=
-GroveTwoNodeMM031.pid.0=
-GroveTwoNodeMM031.upload.tool=stm32flash
-GroveTwoNodeMM031.upload.protocol=sam-ba
-GroveTwoNodeMM031.upload.maximum_size=31744
-GroveTwoNodeMM031.upload.maximum_data_size=3840
-GroveTwoNodeMM031.upload.use_1200bps_touch=false
-GroveTwoNodeMM031.upload.wait_for_upload_port=false
-GroveTwoNodeMM031.upload.native_usb=false
-GroveTwoNodeMM031.build.mcu=cortex-m0
-GroveTwoNodeMM031.build.f_cpu=48000000L
-GroveTwoNodeMM031.build.usb_product="Grove Zero Node(MM32F031)"
-GroveTwoNodeMM031.build.board=Grove_Zero_031
-GroveTwoNodeMM031.build.core=arduino
-GroveTwoNodeMM031.build.extra_flags=-DMM32F031 -mthumb {build.usb_flags}
-GroveTwoNodeMM031.build.ldscript=linker_scripts/gcc/flash.ld
-GroveTwoNodeMM031.build.variant=MM32F031
-GroveTwoNodeMM031.build.variant_system_lib=libmm_mm32f031_gcc_rel.a

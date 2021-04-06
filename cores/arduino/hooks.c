@@ -36,23 +36,23 @@ void yield(void) __attribute__ ((weak, alias("__empty")));
  * This function is called from SysTick handler, before the default
  * handler provided by Arduino.
  */
-// static int __false() {
-// 	// Return false
-// 	return 0;
-// }
-// int sysTickHook(void) __attribute__ ((weak, alias("__false")));
+static int __false() {
+	// Return false
+	return 0;
+}
+int sysTickHook(void) __attribute__ ((weak, alias("__false")));
 
-// /**
-//  * SVC hook
-//  * PendSV hook
-//  *
-//  * These functions are called from SVC handler, and PensSV handler.
-//  * Default action is halting.
-//  */
-// static void __halt() {
-// 	// Halts
-// 	while (1)
-// 		;
-// }
-// void svcHook(void)    __attribute__ ((weak, alias("__halt")));
-// void pendSVHook(void) __attribute__ ((weak, alias("__halt")));
+/**
+ * SVC hook
+ * PendSV hook
+ *
+ * These functions are called from SVC handler, and PensSV handler.
+ * Default action is halting.
+ */
+static void __halt() {
+	// Halts
+	while (1)
+		;
+}
+void svcHook(void)    __attribute__ ((weak, alias("__halt")));
+void pendSVHook(void) __attribute__ ((weak, alias("__halt")));
