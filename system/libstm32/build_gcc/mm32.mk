@@ -21,7 +21,7 @@
 .SUFFIXES: .o .a .c .s
 SUB_MAKEFILES=debug.mk gcc.mk release.mk win.mk sam3s.mk
 
-LIBNAME=libstm
+LIBNAME=libmm
 TOOLCHAIN=gcc
 
 ifeq ($(OS),Windows_NT)
@@ -48,20 +48,20 @@ OUTPUT_BIN = ../../../cores/arduino
 PROJECT_BASE_PATH = ..
 CMSIS_ROOT_PATH = $(PROJECT_BASE_PATH)/../CMSIS
 
-ifeq ($(CHIP), STM32F030)
-CHIP_NAME=stm32f030
-CHIP_SERIE=STM32F0xx
+ifeq ($(CHIP), MM32F031)
+CHIP_NAME=mm32f031
+CHIP_SERIE=MM32F0xx
 endif
 
 CMSIS_ARM_PATH=$(CMSIS_ROOT_PATH)/Include
-CMSIS_ST_PATH=$(CMSIS_ROOT_PATH)/Device/ST
-CMSIS_CHIP_PATH=$(CMSIS_ROOT_PATH)/Device/ST/$(CHIP_SERIE)
+CMSIS_MM_PATH=$(CMSIS_ROOT_PATH)/Device/MM
+CMSIS_CHIP_PATH=$(CMSIS_ROOT_PATH)/Device/MM/$(CHIP_SERIE)
 
 #-------------------------------------------------------------------------------
 # Files
 #-------------------------------------------------------------------------------
 
-vpath %.h $(PROJECT_BASE_PATH)/$(CHIP_SERIE)/inc $(CMSIS_ST_PATH) $(CMSIS_CHIP_PATH)/Include
+vpath %.h $(PROJECT_BASE_PATH)/$(CHIP_SERIE)/inc $(CMSIS_MM_PATH) $(CMSIS_CHIP_PATH)/Include
 vpath %.c $(PROJECT_BASE_PATH)/$(CHIP_SERIE)/src $(CMSIS_ARM_PATH) $(CMSIS_CHIP_PATH)/Source
 
 VPATH+=$(PROJECT_BASE_PATH)/$(CHIP_SERIE)/source
@@ -74,7 +74,7 @@ INCLUDES = -I$(PROJECT_BASE_PATH)
 INCLUDES += -I$(PROJECT_BASE_PATH)/$(CHIP_SERIE)
 INCLUDES += -I$(PROJECT_BASE_PATH)/$(CHIP_SERIE)/inc
 INCLUDES += -I$(CMSIS_ARM_PATH)
-INCLUDES += -I$(CMSIS_ST_PATH)
+INCLUDES += -I$(CMSIS_MM_PATH)
 INCLUDES += -I$(CMSIS_CHIP_PATH)/Include
 
 #-------------------------------------------------------------------------------

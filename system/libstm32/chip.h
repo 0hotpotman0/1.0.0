@@ -19,6 +19,6 @@
 #ifndef _LIB_SAM_
 #define _LIB_SAM_
 
-#include <stm32f0xx_conf.h>
+#include <mm32f0xx_conf.h>
 
 #endif /* _LIB_SAM_ */

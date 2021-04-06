@@ -22,7 +22,7 @@
 // Frequency of the board main oscillator
 #define VARIANT_MAINOSC		8000000
 // Master clock frequency
-#define VARIANT_MCK			48000000
+#define VARIANT_MCK			72000000
 
 #include "Arduino.h"
 #ifdef __cplusplus
