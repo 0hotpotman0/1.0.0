@@ -23,6 +23,10 @@
 #ifndef __HAL_SYSCFG_H
 #define __HAL_SYSCFG_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /*!< Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -150,6 +154,10 @@ uint32_t SYSCFG_GetPendingIT(uint32_t ITSourceLine);
 void SYSCFG_BreakConfig(uint32_t SYSCFG_Break);
 FlagStatus SYSCFG_GetFlagStatus(uint32_t SYSCFG_Flag);
 void SYSCFG_ClearFlag(uint32_t SYSCFG_Flag);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*__HAL_SYSCFG_H */
 /**

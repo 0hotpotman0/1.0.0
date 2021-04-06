@@ -23,6 +23,10 @@
 #ifndef __HAL_DMA_H
 #define __HAL_DMA_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -349,6 +353,10 @@ void DMA_ClearITPendingBit(uint32_t DMA_IT);
 #define DMA_FLAG_TC5        DMA1_FLAG_TC5
 #define DMA_FLAG_HT5        DMA1_FLAG_HT5
 #define DMA_FLAG_TE5        DMA1_FLAG_TE5
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*__HAL_DMA_H */
 /**

@@ -1,11 +1,17 @@
 /**
 ******************************************************************************
-* @file     HAL_crc.h
+* @file     HAL_device.h
 * @author   AE team
 * @version  V1.1.1
 * @date     15/05/2019
-* @brief    This file contains all the functions prototypes for the CRC firmware
-*           library.
+* @brief    CMSIS Cortex-M Peripheral Access Layer for MindMotion
+*           microcontroller devices
+*
+*           This is a convenience header file for defining the part number on the
+*           build command line, instead of specifying the part specific header file.
+*
+*           Example: Add "-MM32F031x4x6_q" to your build options, to define part
+*           Add "#include "HAL_device.h" to your source files
 ******************************************************************************
 * @copy
 *
@@ -19,65 +25,31 @@
 * <h2><center>&copy; COPYRIGHT 2019 MindMotion</center></h2>
 */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __HAL_CRC_H
-#define __HAL_CRC_H
+#ifndef __HAL_device_H
+#define __HAL_device_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
+typedef unsigned char u8;
+typedef unsigned short int u16;
+typedef unsigned int u32;
+typedef unsigned long int u64;
+#define MM32F031x4x6_q
 
-/* Includes ------------------------------------------------------------------*/
-#include "HAL_device.h"
-
-/** @addtogroup StdPeriph_Driver
-* @{
-*/
-
-/** @addtogroup CRC
-* @{
-*/
-
-/** @defgroup CRC_Exported_Types
-* @{
-*/
-
-/**
-* @}
-*/
-
-/** @defgroup CRC_Exported_Constants
-* @{
-*/
-
-/**
-* @}
-*/
-
-/** @defgroup CRC_Exported_Macros
-* @{
-*/
-
-/**
-* @}
-*/
-
-/** @defgroup CRC_Exported_Functions
-* @{
-*/
-
-void CRC_ResetDR(void);
-uint32_t CRC_CalcCRC(uint32_t Data);
-uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength);
-uint32_t CRC_GetCRC(void);
-void CRC_SetIDRegister(uint8_t IDValue);
-uint8_t CRC_GetIDRegister(void);
+#if defined(MM32F031x4x6_q)
+#include "MM32F031x4x6_q.h"
+#include "system_MM32F031x4x6_q.h"
+#else
+#error "HAL_device.h: PART NUMBER undefined"
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __HAL_CRC_H */
+#endif /* __HAL_device_H */
+
 /**
 * @}
 */
@@ -91,3 +63,4 @@ uint8_t CRC_GetIDRegister(void);
 */
 
 /*-------------------------(C) COPYRIGHT 2019 MindMotion ----------------------*/
+

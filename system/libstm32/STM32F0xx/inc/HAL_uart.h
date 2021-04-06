@@ -23,6 +23,10 @@
 #ifndef __HAL_UART_H
 #define __HAL_UART_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -223,6 +227,10 @@ FlagStatus UART_GetFlagStatus(UART_TypeDef *UARTx, uint16_t UART_FLAG);
 void UART_ClearFlag(UART_TypeDef *UARTx, uint16_t UART_FLAG);
 ITStatus UART_GetITStatus(UART_TypeDef *UARTx, uint16_t UART_IT);
 void UART_ClearITPendingBit(UART_TypeDef *UARTx, uint16_t UART_IT);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_UART_H */
 /**

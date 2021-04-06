@@ -23,6 +23,10 @@
 #ifndef __HAL_FLASH_H
 #define __HAL_FLASH_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -290,6 +294,10 @@ FlagStatus FLASH_GetFlagStatus(uint16_t FLASH_FLAG);
 void FLASH_ClearFlag(uint16_t FLASH_FLAG);
 FLASH_Status FLASH_GetStatus(void);
 FLASH_Status FLASH_WaitForLastOperation(uint32_t Timeout);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __HAL_FLASH_H */
 /**

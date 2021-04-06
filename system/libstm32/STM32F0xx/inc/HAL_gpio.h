@@ -23,6 +23,10 @@
 #ifndef __HAL_GPIO_H
 #define __HAL_GPIO_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "HAL_device.h"
 
@@ -309,6 +313,11 @@ void GPIO_WriteBit(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
 void GPIO_Write(GPIO_TypeDef *GPIOx, uint16_t PortVal);
 void GPIO_PinLockConfig(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 void GPIO_PinAFConfig(GPIO_TypeDef *GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO_AF);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* __HAL_GPIO_H */
 /**
 * @}

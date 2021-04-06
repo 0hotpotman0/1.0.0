@@ -20,6 +20,10 @@
 #ifndef __HAL_CONF_H__
 #define __HAL_CONF_H__
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #include "HAL_device.h"
 #include "HAL_adc.h"
 #include "HAL_crc.h"
@@ -37,6 +41,10 @@
 #include "HAL_wwdg.h"
 #include "HAL_misc.h"
 #include "HAL_syscfg.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
