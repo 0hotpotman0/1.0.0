@@ -23,7 +23,7 @@
 #include "Arduino.h"
 
 
-USARTClass::USARTClass( USART_TypeDef* pUsart, IRQn_Type dwIrq, uint32_t dwId, RingBuffer* pRx_buffer )
+USARTClass::USARTClass( UART_TypeDef* pUsart, IRQn_Type dwIrq, uint32_t dwId, RingBuffer* pRx_buffer )
 {
 	_rx_buffer = pRx_buffer;
 	_pUsart = pUsart;
@@ -34,7 +34,7 @@ USARTClass::USARTClass( USART_TypeDef* pUsart, IRQn_Type dwIrq, uint32_t dwId, R
 void USARTClass::begin( const uint32_t dwBaudRate )
 {
 	// Enable USART Clock
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_UART1, ENABLE);
 
 	// Configure USART Rx as input floating
 	pinMode(RX, ALTERNATE);
@@ -50,15 +50,15 @@ void USARTClass::begin( const uint32_t dwBaudRate )
 	// - No parity
 	// - Hardware flow control disabled (RTS and CTS signals)
 	// - Receive and transmit enabled
-	USART_InitStructure.USART_BaudRate = dwBaudRate;
-	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-	USART_InitStructure.USART_Parity = USART_Parity_No ;
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.UART_BaudRate = dwBaudRate;
+	USART_InitStructure.UART_WordLength = UART_WordLength_8b;
+	USART_InitStructure.UART_StopBits = UART_StopBits_1;
+	USART_InitStructure.UART_Parity = UART_Parity_No ;
+	USART_InitStructure.UART_Mode = UART_Mode_Rx | UART_Mode_Tx;
+	USART_InitStructure.UART_HardwareFlowControl = UART_HardwareFlowControl_None;
 
 	// Configure USART
-	USART_Init(_pUsart, &USART_InitStructure);
+	UART_Init(_pUsart, &USART_InitStructure);
 
 	NVIC_InitTypeDef NVIC_InitStructure;
   
@@ -69,12 +69,12 @@ void USARTClass::begin( const uint32_t dwBaudRate )
 	NVIC_Init(&NVIC_InitStructure);
 
 	// Enable USART Receive interrupts
-	USART_ITConfig(_pUsart, USART_IT_RXNE, ENABLE);
+	UART_ITConfig(_pUsart, UART_IT_RXIEN, ENABLE);  //USART_ITConfig(_pUsart, USART_IT_RXNE, ENABLE);
 	// Enable UART interrupt in NVIC
 	NVIC_EnableIRQ( _dwIrq ) ;
 
 	// Enable the USART
-	USART_Cmd(_pUsart, ENABLE);
+	UART_Cmd(_pUsart, ENABLE);
 }
 
 
@@ -89,10 +89,10 @@ void USARTClass::end( void )
 	// Wait for any outstanding data to be sent
 	flush();
   
-	USART_Cmd(_pUsart, DISABLE);
+	UART_Cmd(_pUsart, DISABLE);
 
 	// Disable USART Clock
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, DISABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_UART1, DISABLE);
 }
 
 int USARTClass::available( void )
@@ -130,22 +130,22 @@ void USARTClass::flush( void )
 size_t USARTClass::write( const uint8_t uc_data )
 {
 	// Send one byte from USART
-	USART_SendData(_pUsart, uc_data);
+	UART_SendData(_pUsart, uc_data);
 
 	// Loop until USART DR register is empty
-	while(USART_GetFlagStatus(_pUsart, USART_FLAG_TXE) == RESET);
+	while(UART_GetFlagStatus(_pUsart, UART_FLAG_TXEMPTY) == RESET);    // MARK     UART_FLAG_TXEPT  (while(USART_GetFlagStatus(_pUsart, USART_FLAG_TXE) == RESET);)
 
 	return 1;
 }
 
 void USARTClass::IrqHandler( void )
 {
-	if(USART_GetITStatus(_pUsart, USART_IT_RXNE) != RESET)
+	if(UART_GetITStatus(_pUsart, UART_IT_RXIEN) != RESET)  //if(USART_GetITStatus(_pUsart, USART_IT_RXNE) != RESET)
 	{
 		// Read one byte from the receive data register
 		uint8_t RxBuffer;
 	
-		RxBuffer = USART_ReceiveData(_pUsart);
+		RxBuffer = UART_ReceiveData(_pUsart);
 		_rx_buffer->store_char( RxBuffer ) ;
 	}
 }

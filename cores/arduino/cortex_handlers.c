@@ -72,7 +72,7 @@ void TIM14_IRQHandler                (void) __attribute__ ((weak, alias("__halt"
 void TIM16_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 // void TIM17_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void I2C1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
-void I2C2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
+// void I2C2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void USART1_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
