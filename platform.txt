@@ -25,7 +25,7 @@ compiler.define=-DARDUINO=
 # this can be overriden in boards.txt
 build.extra_flags=
 
-compiler.libsam.c.flags="-I{build.system.path}/libstm32" "-I{build.system.path}/CMSIS/Include/" "-I{build.system.path}/CMSIS/Device/ST/" "-I{build.system.path}/libstm32/STM32F0xx/inc" "-I{build.system.path}/CMSIS/Device/ST/STM32F0xx/Include"
+compiler.libsam.c.flags="-I{build.system.path}/libstm32" "-I{build.system.path}/CMSIS/Include/" "-I{build.system.path}/CMSIS/Device/MM/" "-I{build.system.path}/libstm32/MM32F0xx/inc" "-I{build.system.path}/CMSIS/Device/MM/MM32F0xx/Include"
 
 # USB Flags
 # ---------
