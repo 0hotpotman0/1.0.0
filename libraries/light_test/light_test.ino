@@ -20,10 +20,10 @@ void loop() {
 //   put your main code here, to run repeatedly:
 
 digitalWrite(LIGHT_LED_PIN_NUM, LOW);
-// delay(1000);
+delay(1000);
 
-// digitalWrite(LIGHT_LED_PIN_NUM, HIGH);
-// delay(1000);
+digitalWrite(LIGHT_LED_PIN_NUM, HIGH);
+delay(1000);
 
 
 
