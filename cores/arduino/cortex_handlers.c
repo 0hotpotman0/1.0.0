@@ -61,7 +61,7 @@ void EXTI4_15_IRQHandler             (void) __attribute__ ((weak, alias("__halt"
 void DMA1_Channel1_IRQHandler        (void) __attribute__ ((weak, alias("__halt")));
 void DMA1_Channel2_3_IRQHandler      (void) __attribute__ ((weak, alias("__halt")));
 void DMA1_Channel4_5_IRQHandler      (void) __attribute__ ((weak, alias("__halt")));
-void ADC1_COMP_IRQHandler            (void) __attribute__ ((weak, alias("__halt")));
+void ADC1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void TIM1_BRK_UP_TRG_COM_IRQHandler  (void) __attribute__ ((weak, alias("__halt")));
 void TIM1_CC_IRQHandler              (void) __attribute__ ((weak, alias("__halt")));
 void TIM2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
@@ -70,13 +70,13 @@ void TIM3_IRQHandler                 (void) __attribute__ ((weak, alias("__halt"
 void TIM14_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 // void TIM15_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void TIM16_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
-// void TIM17_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
+void TIM17_IRQHandler                (void) __attribute__ ((weak, alias("__halt")));
 void I2C1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 // void I2C2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI1_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
 void SPI2_IRQHandler                 (void) __attribute__ ((weak, alias("__halt")));
-void USART1_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
-void USART2_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
+void UART1_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
+void UART2_IRQHandler               (void) __attribute__ ((weak, alias("__halt")));
 // void CEC_IRQHandler                  (void) __attribute__ ((weak, alias("__halt")));
 
 

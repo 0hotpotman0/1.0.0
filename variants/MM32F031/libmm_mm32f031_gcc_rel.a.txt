@@ -345,44 +345,44 @@ system_MM32F031x4x6_q.o:
 00000000 T SystemInit
 
 startup_MM32F031x4x6_q.o:
-00000000 W ADC1_IRQHandler
+         U ADC1_IRQHandler
 0000000e t CopyDataInit
-00000000 W DMA1_Channel1_IRQHandler
-00000000 W DMA1_Channel2_3_IRQHandler
-00000000 W DMA1_Channel4_5_IRQHandler
+         U DMA1_Channel1_IRQHandler
+         U DMA1_Channel2_3_IRQHandler
+         U DMA1_Channel4_5_IRQHandler
 00000000 T Default_Handler
-00000000 W EXTI0_1_IRQHandler
-00000000 W EXTI2_3_IRQHandler
-00000000 W EXTI4_15_IRQHandler
-00000000 W FLASH_IRQHandler
+         U EXTI0_1_IRQHandler
+         U EXTI2_3_IRQHandler
+         U EXTI4_15_IRQHandler
+         U FLASH_IRQHandler
 00000022 t FillZerobss
-00000000 W HardFault_Handler
-00000000 W I2C1_IRQHandler
+         U HardFault_Handler
+         U I2C1_IRQHandler
 00000000 t Infinite_Loop
 00000014 t LoopCopyDataInit
 00000026 t LoopFillZerobss
 00000036 t LoopForever
-00000000 W NMI_Handler
-00000000 W PVD_IRQHandler
-00000000 W PendSV_Handler
-00000000 W RCC_IRQHandler
-00000000 W RTC_IRQHandler
+         U NMI_Handler
+         U PVD_IRQHandler
+         U PendSV_Handler
+         U RCC_IRQHandler
+         U RTC_IRQHandler
 00000000 W Reset_Handler
-00000000 W SPI1_IRQHandler
-00000000 W SPI2_IRQHandler
-00000000 W SVC_Handler
-00000000 W SysTick_Handler
+         U SPI1_IRQHandler
+         U SPI2_IRQHandler
+         U SVC_Handler
+         U SysTick_Handler
          U SystemInit
-00000000 W TIM14_IRQHandler
-00000000 W TIM16_IRQHandler
-00000000 W TIM17_IRQHandler
-00000000 W TIM1_BRK_UP_TRG_COM_IRQHandler
-00000000 W TIM1_CC_IRQHandler
-00000000 W TIM2_IRQHandler
-00000000 W TIM3_IRQHandler
-00000000 W UART1_IRQHandler
-00000000 W UART2_IRQHandler
-00000000 W WWDG_IRQHandler
+         U TIM14_IRQHandler
+         U TIM16_IRQHandler
+         U TIM17_IRQHandler
+         U TIM1_BRK_UP_TRG_COM_IRQHandler
+         U TIM1_CC_IRQHandler
+         U TIM2_IRQHandler
+         U TIM3_IRQHandler
+         U UART1_IRQHandler
+         U UART2_IRQHandler
+         U WWDG_IRQHandler
          U __libc_init_array
          U _ebss
          U _edata
