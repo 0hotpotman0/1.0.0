@@ -20,6 +20,7 @@
 #define ARDUINO_MAIN
 #include "Arduino.h"
 
+
 __IO uint32_t TimingMillis;
 
 
@@ -36,18 +37,24 @@ uint32_t GetTickCount(void)
 /*
  * \brief Main entry point of Arduino application
  */
+
+#define LIGHT_LED_PIN_NUM		PA1
+
+int val11;
+
+
 int main( void )
 {
 	
 	init();
-
+ 
 	delay(1);
 
 #if defined(USBCON)
 //	USBDevice.attach();
 #endif
 
-	// bootloader();
+	bootloader();
 	
 	setup();
 

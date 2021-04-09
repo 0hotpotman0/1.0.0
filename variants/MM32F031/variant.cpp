@@ -80,7 +80,7 @@ extern "C"{
 			NULL,  // 7
 			NULL,  // 8
 			NULL,  // 9
-			TIM14, // 10
+			TIM2, // 10
 			NULL,  // 11
 			NULL,  // 12
 			NULL,  // 13
@@ -149,7 +149,7 @@ extern "C" {
 		NVIC_SetPriority(SysTick_IRQn, 15);
 
 		// Initialize C library
-		// __libc_init_array();
+		__libc_init_array();
 
 		// Initialize Analog Controller
 		ADC_InitTypeDef ADC_InitStructure;
@@ -170,7 +170,9 @@ extern "C" {
 		
 		ADC_Init(ADC1, &ADC_InitStructure);
 
+	
 		//Enable ADCDMA
+		ADC_DMACmd(ADC1, ENABLE); 
 		ADC_Cmd(ADC1, ENABLE); //Enable AD conversion
 
 		ADC_SoftwareStartConvCmd(ADC1, ENABLE);

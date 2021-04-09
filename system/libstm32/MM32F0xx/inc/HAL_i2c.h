@@ -60,6 +60,8 @@ typedef struct {
     uint16_t I2C_Mode;
     uint16_t I2C_Speed;
     uint16_t I2C_OwnAddress;
+    uint16_t I2C_Ack;                  //add from above
+    uint16_t I2C_AcknowledgedAddress;  //add from above
     uint32_t I2C_ClockSpeed;
 } I2C_InitTypeDef;
 
