@@ -27,8 +27,8 @@ extern "C"{
 			{GPIOA, 3, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_1}, // 0  : RX
 			{GPIOA, 2, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_1}, // 1  : TX
 
-			{GPIOA, 9, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_OD, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_4},	// 2  : SCL
-			{GPIOA, 10, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_OD, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_4}, // 3  : SDA
+			{GPIOA, 9, RCC_AHBPeriph_GPIOA, GPIO_Mode_AF_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_1},	// 2  : SCL  /UART-rx    
+			{GPIOA, 10, RCC_AHBPeriph_GPIOA, GPIO_Mode_AF_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, GPIO_AF_1}, // 3  : SDA   /UART-tx
 
 			{GPIOA, 0, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, 0}, // 4  : ADC
 			{GPIOA, 1, RCC_AHBPeriph_GPIOA, GPIO_Mode_Out_PP, GPIO_Mode_IN_FLOATING, GPIO_Speed_50MHz, 0}, // 5  : ADC

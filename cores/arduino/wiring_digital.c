@@ -57,7 +57,7 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 		
 		case ALTERNATE:
 			GPIO_PinAFConfig(gpio_port, g_APinDescription[ulPin].ulPin & 0xF, g_APinDescription[ulPin].ulPinAFMode);
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 			break;
 		case ANALOG:
 			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -73,7 +73,7 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 		GPIO_InitStructure.GPIO_Speed = g_APinDescription[ulPin].ulPinSpeed;
 	}
 	
-	GPIO_Init(gpio_port, &GPIO_InitStructure);
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 void digitalWrite(uint32_t ulPin, uint32_t ulVal)
