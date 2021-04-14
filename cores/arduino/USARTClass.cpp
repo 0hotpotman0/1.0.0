@@ -46,7 +46,7 @@ void USARTClass::begin(const uint32_t dwBaudRate)
 	// // Configure USART Tx as alternate function push-pull
 	pinMode(TX, INPUT );
 
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);    //set pin 9 and pin 10 as uart for test anolog 
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);	
 
 	USART_InitStructure.UART_BaudRate = dwBaudRate;
@@ -57,23 +57,23 @@ void USARTClass::begin(const uint32_t dwBaudRate)
 	USART_InitStructure.UART_HardwareFlowControl = UART_HardwareFlowControl_None;
 
 	// Configure USART
-	UART_Init(UART1, &USART_InitStructure);
+	UART_Init(_pUsart, &USART_InitStructure);
 	// GPIO_InitTypeDef GPIO_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	// Enable the USARTy Interrupt
-	NVIC_InitStructure.NVIC_IRQChannel = UART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannel = _dwIrq;
 	NVIC_InitStructure.NVIC_IRQChannelPriority = _dwId;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
 	// // Enable USART Receive interrupts
-	// UART_ITConfig(UART1, UART_IT_RXIEN, ENABLE); 
+	// UART_ITConfig(_pUsart, UART_IT_RXIEN, ENABLE); 
 	// // Enable UART interrupt in NVIC
-	NVIC_EnableIRQ(UART1_IRQn);
+	NVIC_EnableIRQ(_dwIrq);
 
 	// Enable the USART
-	UART_Cmd(UART1, ENABLE);
+	UART_Cmd(_pUsart, ENABLE);
 
 
 }
@@ -84,12 +84,12 @@ void USARTClass::end(void)
 	_rx_buffer->_iHead = _rx_buffer->_iTail;
 
 	// Disable UART interrupt in NVIC
-	NVIC_DisableIRQ(UART1_IRQn);
+	NVIC_DisableIRQ(_dwIrq);
 
 	// Wait for any outstanding data to be sent
 	flush();
 
-	UART_Cmd(UART1, DISABLE);
+	UART_Cmd(_pUsart, DISABLE);
 
 	// Disable USART Clock
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_UART1, DISABLE);
@@ -129,10 +129,10 @@ void USARTClass::flush(void)
 size_t USARTClass::write(const uint8_t uc_data)
 {
 	// Send one byte from USART
-	UART_SendData(UART1, uc_data);
+	UART_SendData(_pUsart, uc_data);
 
 	// Loop until USART DR register is empty
-	while (UART_GetFlagStatus(UART1, UART_FLAG_TXEPT) == RESET)
+	while (UART_GetFlagStatus(_pUsart, UART_FLAG_TXEPT) == RESET)
 		; // MARK     UART_FLAG_TXEPT  (while(USART_GetFlagStatus(_pUsart, USART_FLAG_TXE) == RESET);)
 
 	return 1;
@@ -140,12 +140,12 @@ size_t USARTClass::write(const uint8_t uc_data)
 
 void USARTClass::IrqHandler(void)
 {
-	if (UART_GetITStatus(UART1, UART_IT_RXIEN) != RESET) //if(USART_GetITStatus(_pUsart, USART_IT_RXNE) != RESET)
+	if (UART_GetITStatus(_pUsart, UART_IT_RXIEN) != RESET) //if(USART_GetITStatus(_pUsart, USART_IT_RXNE) != RESET)
 	{
 		// Read one byte from the receive data register
 		uint8_t RxBuffer;
 
-		RxBuffer = UART_ReceiveData(UART1);
+		RxBuffer = UART_ReceiveData(_pUsart);
 		_rx_buffer->store_char(RxBuffer);
 	}
 }

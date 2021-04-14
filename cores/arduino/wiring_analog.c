@@ -71,10 +71,11 @@ uint32_t analogRead(uint32_t ulPin)
 	pinMode(ulPin, ANALOG);
 	
 	// Convert the ADC1 temperature sensor  with 55.5 Cycles as sampling time
-	ADC_ChannelConfig(ADC1, ulChannel , ADC_SampleTime_55_5Cycles);
+	ADC_RegularChannelConfig(ADC1, ulChannel, 0, ADC_SampleTime_239_5Cycles);   //config from MM32 HAL
 	
 	// Start ADC1 Software Conversion
-	ADC_StartOfConversion(ADC1);
+	// ADC_StartOfConversion(ADC1);
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 
 	// Wait until conversion completion
 	// while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET);
