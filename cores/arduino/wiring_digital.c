@@ -73,7 +73,7 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
 		GPIO_InitStructure.GPIO_Speed = g_APinDescription[ulPin].ulPinSpeed;
 	}
 	
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(gpio_port, &GPIO_InitStructure);
 }
 
 void digitalWrite(uint32_t ulPin, uint32_t ulVal)
