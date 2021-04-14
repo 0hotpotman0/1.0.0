@@ -64,8 +64,8 @@ extern "C"{
 static const uint8_t RX = 2;
 static const uint8_t TX = 3;
 
-static const uint8_t SCL = 0;
-static const uint8_t SDA = 1;
+static const uint8_t SCL = 2;
+static const uint8_t SDA = 3;
 
 static const uint8_t SS   = 10;
 static const uint8_t SCK  = 11;
