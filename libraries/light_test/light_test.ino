@@ -13,64 +13,45 @@
 #define ANALOG_DATA_PIN        PA0 
 
 #define REFVOLATGE 3.3 
-
-typedef enum {
-    ADCch0                 = ADC_Channel_0,
-    ADCch1                 = ADC_Channel_1,
-    ADCch2                 = ADC_Channel_2,
-    ADCch3                 = ADC_Channel_3,
-    ADCch4                 = ADC_Channel_4,
-    ADCch5                 = ADC_Channel_5,
-    ADCch6                 = ADC_Channel_6,
-    ADCch7                 = ADC_Channel_7,
-    ADCch8                 = ADC_Channel_8,
-    ADCch9                 = ADC_Channel_9,
-    ADCch10                = ADC_Channel_10,
-    ADCch11                = ADC_Channel_11,
-    ADCch14                = ADC_Channel_14,
-    ADCchTemp              = ADC_Channel_TempSensor,
-    ADCchVref              = ADC_Channel_Vrefint,
-} ADCch;
-void ADCConfig(ADCch ADC_Channel);
-u16 Get_Adc_Average(uint8_t times);                                                           //Used to store ADC conversion value
+                                                     //Used to store ADC conversion value
 
 u16 ADCVAL;
 int fValue;
 uint16_t adcLight0;
 
+int sensorPin = PA0;    // select the input pin for the potentiometer
+int ledPin = PA1;      // select the pin for the LED
+int sensorValue = 0;
+
 void setup() {
   Serial.begin(115200);
-  pinMode(PA1, OUTPUT);
-  pinMode(PA5, OUTPUT);
   digitalWrite(PA5,HIGH);
-  // pinMode(PA4, OUTPUT); 
-	// digitalWrite(PA4, HIGH);
-  ADCConfig(ADCch0);
-  // ADCSingleChannelInit(ADCch9);
-  // ADC_SoftwareStartConvCmd(ADC1, ENABLE);    
+  pinMode(ledPin, OUTPUT);
 
-  // pinMode(LIGHT_LED_PIN_NUM, OUTPUT);
 }
 
 void loop() {
-    adcLight0 = analogRead(ANALOG_DATA_PIN);
-    Serial.println(adcLight0);
-    Serial.println("111111");
-    ADCVAL = Get_Adc_Average(5);
-    Serial.println(ADCVAL);
-    fValue = ((float)ADCVAL / 4095) * 3.3; //use 3.3V as VDD
-    Serial.println(fValue);
-    delay(500);
+    // adcLight0 = analogRead(ANALOG_DATA_PIN);
+    // Serial.println(adcLight0);
+    // Serial.println("111111");
+    // ADCVAL = Get_Adc_Average(5);
+    // Serial.println(ADCVAL);
+    // fValue = ((float)ADCVAL / 4095) * 3.3; //use 3.3V as VDD
+    // Serial.println(fValue);
+    // delay(500);
 
-    // if(fValue >= 3 ){
-    //     for(int i = 0; i <10; i++) {
-		//     digitalWrite(PA1,HIGH);
-		//     delay(500);
-		//     digitalWrite(PA1,LOW);
-		//     delay(500);
-		
-    //     }
-    // }
+      // read the value from the sensor:
+  sensorValue = analogRead(sensorPin);
+  // turn the ledPin on
+  digitalWrite(ledPin, HIGH);
+  // stop the program for <sensorValue> milliseconds:
+  delay(sensorValue);
+  Serial.println(sensorValue);
+  // turn the ledPin off:
+  digitalWrite(ledPin, LOW);
+  // stop the program for for <sensorValue> milliseconds:
+  delay(sensorValue);
+  Serial.println(sensorValue);
 
 }
 
@@ -79,111 +60,7 @@ void loop() {
 
 /***********************************************************************************************************************************/
 
-void GPIO_Config_AIN(GPIO_TypeDef* GPIOx, u16 GPIO_Pin_n)
-{
-    GPIO_InitTypeDef GPIO_InitStructure;
-    if(GPIOx == GPIOA) {
-        RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);                         //GPIO clock starts
-    }
-    if(GPIOx == GPIOB) {
-        RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);                         //GPIO clock starts
-    }
-    if(GPIOx == GPIOC) {
-        RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);                         //GPIO clock starts
-    }
-    if(GPIOx == GPIOD) {
-        RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);                         //GPIO clock starts
-    }
-    GPIO_InitStructure.GPIO_Pin  =  GPIO_Pin_n;                                 //pin
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;                           //Output speed
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;                               //GPIO mode
-    GPIO_Init(GPIOx, &GPIO_InitStructure);
-}
 
-void ADCSingleChannelInit(ADCch ADC_Channel_x)
-{
-    ADC_InitTypeDef  ADC_InitStructure;
-    ADC_StructInit(&ADC_InitStructure);
-
-    //Initialize PA1 to analog input mode
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);                         //Enable ADC clock
-
-    ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-    ADC_InitStructure.ADC_PRESCARE = ADC_PCLK2_PRESCARE_16;                     //ADC prescale factor
-    ADC_InitStructure.ADC_Mode = ADC_Mode_Continuous_Scan;                      //Set ADC mode to continuous conversion mode
-    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;                      //AD data right-justified
-    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
-    ADC_Init(ADC1, &ADC_InitStructure);
-
-    //	ADC_RegularChannelConfig(ADC, ADC_Channel_All_Disable, 0, ADC_SampleTime_13_5Cycles);//Block all channels
-    ADC_RegularChannelConfig(ADC1, ADC_Channel_x, 0, ADC_SampleTime_239_5Cycles);//Enable the channel
-
-
-    if(ADC_Channel_x == ADC_Channel_TempSensor) {
-        ADC_TempSensorCmd(ENABLE);                                       //Enable internal temperature sensor
-    }
-    if(ADC_Channel_x == ADC_Channel_Vrefint) {
-        ADC_VrefintCmd(ENABLE);                                       //Enable internal temperature sensor
-    }
-    //Enable ADCDMA
-    ADC_Cmd(ADC1, ENABLE);                                                       //Enable AD conversion
-}
-
-void ADCConfig(ADCch ADC_Channel)
-{
-    if( ADCch0 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_14);
-    } else if( ADCch1 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_1);
-    } else if( ADCch2 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_2);
-    } else if( ADCch3 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_3);
-    } else if( ADCch4 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_4);
-    } else if( ADCch5 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_5);
-    } else if( ADCch6 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_6);
-    } else if( ADCch7 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOA, GPIO_Pin_7);
-    } else if( ADCch8 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOB, GPIO_Pin_0);
-    } else if( ADCch9 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOB, GPIO_Pin_14);
-    } else if( ADCch10 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOB, GPIO_Pin_3);
-    } else if( ADCch11 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOB, GPIO_Pin_4);
-    } else if( ADCch14 == ADC_Channel ) {
-        GPIO_Config_AIN(GPIOB, GPIO_Pin_7);
-    } else {
-    }
-    ADCSingleChannelInit(ADC_Channel);
-}
-
-u16 ADC1_SingleChannel_Get(void)
-{
-    u16 puiADData;
-    /*ADCR�Ĵ�����ADSTλʹ�ܣ���������ת��*/
-    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-    while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
-    ADC_ClearFlag(ADC1, ADC_FLAG_EOC);
-    puiADData = ADC_GetConversionValue(ADC1);
-    return puiADData;
-}
-
-u16 Get_Adc_Average(uint8_t times)
-{
-    u32 temp_val = 0;
-    u8 t;
-    u8 delay;
-    for(t = 0; t < times; t++) {
-        temp_val += ADC1_SingleChannel_Get();
-        for(delay = 0; delay < 100; delay++);
-    }
-    return temp_val / times;
-}
 
 
 /*
