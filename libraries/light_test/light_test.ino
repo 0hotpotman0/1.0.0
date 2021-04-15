@@ -1,75 +1,31 @@
 #include "Arduino.h"
-#include "stdio.h"
 #include <Wire.h>
-#include <Flash.h>
-#include <LowPower.h>
-#include <WatchDog.h>
-
-#define GROVE_TWO_TX_PIN_NUM	PA2
-#define GROVE_TWO_RX_PIN_NUM	PA3
-
-#define LIGHT_LED_PIN_NUM		PA1
-#define LIGHT_VERSION_PIN_NUM   PB1
-#define ANALOG_DATA_PIN        PA0 
-
-#define REFVOLATGE 3.3 
-                                                     //Used to store ADC conversion value
-
-u16 ADCVAL;
-int fValue;
-uint16_t adcLight0;
-
-int sensorPin = PA0;    // select the input pin for the potentiometer
-int ledPin = PA1;      // select the pin for the LED
-int sensorValue = 0;
 
 void setup() {
-  Serial.begin(115200);
-  digitalWrite(PA5,HIGH);
-  pinMode(ledPin, OUTPUT);
-
+  Wire.begin(); // join i2c bus (address optional for master)
+  
 }
+
+byte x = 10;
 
 void loop() {
-    // adcLight0 = analogRead(ANALOG_DATA_PIN);
-    // Serial.println(adcLight0);
-    // Serial.println("111111");
-    // ADCVAL = Get_Adc_Average(5);
-    // Serial.println(ADCVAL);
-    // fValue = ((float)ADCVAL / 4095) * 3.3; //use 3.3V as VDD
-    // Serial.println(fValue);
-    // delay(500);
-
-      // read the value from the sensor:
-  sensorValue = analogRead(sensorPin);
-  // turn the ledPin on
-  digitalWrite(ledPin, HIGH);
-  // stop the program for <sensorValue> milliseconds:
-  delay(sensorValue);
-  Serial.println(sensorValue);
-  // turn the ledPin off:
-  digitalWrite(ledPin, LOW);
-  // stop the program for for <sensorValue> milliseconds:
-  delay(sensorValue);
-  Serial.println(sensorValue);
-
+  Wire.beginTransmission(8); // transmit to device #8
+  Wire.write("x is ");        // sends five bytes
+  Wire.write(x);              // sends one byte
+  Wire.endTransmission();    // stop transmitting
+  
+  x++;
+  delay(500);
 }
 
 
 
 
-/***********************************************************************************************************************************/
 
 
 
 
-/*
 
-**********************************************************************************************************************************************
-**********************************************************************************************************************************************
-
-
-*/
 
 
 
@@ -1359,5 +1315,3 @@ void loop() {
 // {
 //     digitalWrite(ANALOG_POWER_PIN, HIGH);
 // }
-
-

@@ -37,7 +37,7 @@
 
 #ifdef BLE_SUPPORT
 
-#define GPIO_I2C
+// #define GPIO_I2C
 
 #define I2C_CMD_RAW_DATA_TIME		200
 #define I2C_CMD_SYS_READY_TIME		500

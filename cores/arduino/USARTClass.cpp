@@ -46,8 +46,8 @@ void USARTClass::begin(const uint32_t dwBaudRate)
 	// // Configure USART Tx as alternate function push-pull
 	pinMode(TX, INPUT );
 
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);    //set pin 9 and pin 10 as uart for test anolog 
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);	
+	// GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);    //set pin 9 and pin 10 as uart for test anolog 
+	// GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_1);	// if use UART please open 9 and 10 pin
 
 	USART_InitStructure.UART_BaudRate = dwBaudRate;
 	USART_InitStructure.UART_WordLength = UART_WordLength_8b;

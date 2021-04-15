@@ -41,6 +41,8 @@ extern "C" {
 
 #define	START_DELAY				20
 
+#define FLASH_DEVICE_ADDR 0xa8
+
 #endif
 
 
@@ -60,32 +62,32 @@ void TwoWire::begin(void) {
 
 	if (twi==I2C1)
 	{
-		RCC_I2CCLKConfig(RCC_I2C1CLK_SYSCLK); // 48 MHz
+		GPIO_InitTypeDef  GPIO_InitStructure;
+		// RCC_I2CCLKConfig(RCC_I2C1CLK_SYSCLK); // 48 MHz
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);  
 
-		pinMode(SDA, ALTERNATE);
-		pinMode(SCL, ALTERNATE);
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_9 | GPIO_Pin_10;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_20MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+
 	}
 
 	I2C_DeInit(twi);
 
-	I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
-	I2C_InitStructure.I2C_AnalogFilter = I2C_AnalogFilter_Enable;
-	I2C_InitStructure.I2C_DigitalFilter = 0x00;
-	if (status == UNINITIALIZED)
-	{
-		I2C_InitStructure.I2C_OwnAddress1 = 0x00;
-		status = MASTER_IDLE;
-	}
-	I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
-	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-	// I2C_InitStructure.I2C_Timing = 0xb0420f13; // 100 KHz
-	// I2C_InitStructure.I2C_Timing = 0x50300707; // 400 KHz
-	 I2C_InitStructure.I2C_Timing = 0x50330309; // 400 KHz
-	// I2C_InitStructure.I2C_Timing = 0x50100103; // 1000 KHz
+	I2C_InitStructure.I2C_Mode = I2C_Mode_MASTER;
+	I2C_InitStructure.I2C_OwnAddress = 0x00;
+	I2C_InitStructure.I2C_Speed = I2C_Speed_STANDARD;
+	I2C_InitStructure.I2C_ClockSpeed = 100000;
 	I2C_Init(twi, &I2C_InitStructure);
 
 	I2C_Cmd(twi, ENABLE);
+
+		pinMode(SDA, ALTERNATE);
+		pinMode(SCL, ALTERNATE);
+
 #endif
 
 }
@@ -97,6 +99,7 @@ void TwoWire::begin(uint8_t address) {
 	if (twi==I2C1)
 	{
 		// RCC_I2CCLKConfig(RCC_I2C1CLK_SYSCLK); // 48 MHz
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);  
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
 
 		pinMode(SDA, ALTERNATE);
@@ -105,15 +108,10 @@ void TwoWire::begin(uint8_t address) {
 
 	I2C_DeInit(twi);
 
-	I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
-	// I2C_InitStructure.I2C_AnalogFilter = I2C_AnalogFilter_Enable;
-	// I2C_InitStructure.I2C_DigitalFilter = 0x0A;
+	I2C_InitStructure.I2C_Mode = I2C_Mode_SLAVE;
 	I2C_InitStructure.I2C_OwnAddress = address;
-	// I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
-	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-	// I2C_InitStructure.I2C_Timing = 0xb0420f13; // 100 KHz
-	I2C_InitStructure.I2C_ClockSpeed = 0x50330309; // 400 KHz
-	//I2C_InitStructure.I2C_Timing = 0x50100103; // 1000 KHz
+	I2C_InitStructure.I2C_Speed = I2C_Speed_STANDARD;
+	I2C_InitStructure.I2C_ClockSpeed = 100000;
 	I2C_Init(twi, &I2C_InitStructure);
 	
 //	I2C_StretchClockCmd(twi, DISABLE);
@@ -121,7 +119,7 @@ void TwoWire::begin(uint8_t address) {
 	NVIC_SetPriority(I2C1_IRQn, 1);
 	NVIC_EnableIRQ(I2C1_IRQn);
 	I2C_Cmd(twi, ENABLE);
-	I2C_ITConfig(twi, I2C_IT_ACTIVITY|I2C_IT_GEN_CALL, ENABLE);
+	// I2C_ITConfig(twi, I2C_IT_ACTIVITY|I2C_IT_GEN_CALL, ENABLE);
 }
 
 void TwoWire::begin(int address) {
@@ -137,7 +135,6 @@ void TwoWire::end(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	int value;
 
-//	if(status == SLAVE_IDLE)return;
 	
 	if(WIRE_I2C_SCL_READ() && WIRE_I2C_SDA_READ())return;
 	
@@ -154,8 +151,8 @@ void TwoWire::end(void)
 	GPIO_InitStructure.GPIO_Pin = gpio_pin;
 	// GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	// GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;   //GPIO_Mode_Out_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_20MHz;
 	
 	GPIO_Init(gpio_port, &GPIO_InitStructure);
 
@@ -167,8 +164,8 @@ void TwoWire::end(void)
 	GPIO_InitStructure.GPIO_Pin = gpio_pin;
 	// GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	// GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_20MHz;
 
 	GPIO_Init(gpio_port, &GPIO_InitStructure);
 
@@ -497,49 +494,63 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop) {
 	uint32_t _millis;
 
 	_millis = millis();
-	while(I2C_GetFlagStatus(twi, I2C_FLAG_STOP_DET) != RESET)
+	//while(I2C_GetFlagStatus(twi, I2C_FLAG_TX_EMPTY) != RESET)
+	//{
+	//	if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
+	//}
+	if (sendStop == true)
 	{
-		if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
+		I2C_Cmd(I2C1, DISABLE);
+		I2C_Send7bitAddress(twi, txAddress, I2C_Direction_Transmitter);
+		I2C_Cmd(I2C1, ENABLE);
 	}
-	// if (sendStop == true)
-	// {
-	// 	I2C_TransferHandling(twi, txAddress, txBufferLength, I2C_AutoEnd_Mode, I2C_Generate_Start_Write);
-	// }
-	// else
-	// {
-	// 	I2C_TransferHandling(twi, txAddress, txBufferLength, I2C_SoftEnd_Mode, I2C_Generate_Start_Write);
-	// }
-
-	uint8_t *pBuffer = txBuffer;
+	else
+	{
+		I2C_Send7bitAddress(twi, txAddress, I2C_Direction_Transmitter);
+	}
+		uint8_t *pBuffer = txBuffer;
 	uint8_t NumByteToWrite = txBufferLength;
+    while(NumByteToWrite--) {
+        if(0 == (NumByteToWrite - 1))
+            I2C1->IC_DATA_CMD = *pBuffer++ | 0x200;                                   //muaul set stop flag
+        else
+            I2C_SendData(twi, *pBuffer++);   
+			
+			while(1) {
+        if(I2C_GetFlagStatus(I2C1, I2C_FLAG_TX_EMPTY)) {
+            break;
+        }
+    }                                //tx data
+    }
+
 	/* While there is data to be read */
 	while(NumByteToWrite--)
 	{
 		_millis = millis();
-		while(I2C_GetFlagStatus(twi,I2C_FLAG_START_DET) == RESET)  //I2C_FLAG_TXIS
-		{
-			if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
-		}
-		// if (I2C_GetFlagStatus(twi, I2C_FLAG_NACKF) == SET) return 0;
+		// while(I2C_GetFlagStatus(twi,I2C_FLAG_TX_EMPTY) == RESET)  //I2C_FLAG_TXIS
+		// {
+		// 	if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
+		// }
+		// if (I2C_GetFlagStatus(twi, I2C_FLAG_TX_ABRT) == SET) return 0;
 		/* Send the current byte to slave */
 		I2C_SendData(twi, *pBuffer++);
 	}
 
 	_millis = millis();
-	if (sendStop == true)
-	{
-		while(I2C_GetFlagStatus(twi, I2C_FLAG_STOP_DET) == RESET)
-		{
-			if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
-		}
-	}
-	else
-	{
-		while(I2C_GetFlagStatus(twi, I2C_FLAG_STOP_DET) == RESET)
-		{
-			if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
-		}
-	}
+	// if (sendStop == true)
+	// {
+	// 	while(I2C_GetFlagStatus(twi, I2C_FLAG_STOP_DET) == RESET)
+	// 	{
+	// 		if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
+	// 	}
+	// }
+	// else
+	// {
+	// 	while(I2C_GetFlagStatus(twi, I2C_FLAG_STOP_DET) == RESET)
+	// 	{
+	// 		if(EVENT_TIMEOUT < (millis() - _millis)) return 0;
+	// 	}
+	// }
 
 	// reset tx buffer iterator vars
 	txBufferLength = 0;
@@ -608,6 +619,7 @@ void TwoWire::flush(void) {
 	// reset.
 
 }
+#ifdef GPIO_I2C
 
 int TwoWire::isbusidle(void) {
 	// Do nothing, use endTransmission(..) to force
@@ -618,6 +630,7 @@ int TwoWire::isbusidle(void) {
 	return 0;
 }
 
+#endif
 void TwoWire::reset(void) {
 	// Do nothing, use endTransmission(..) to force
 	// data transfer.

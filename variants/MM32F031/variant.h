@@ -61,8 +61,8 @@ extern "C"{
 #define PF0  	8
 #define PF1  	9
 
-static const uint8_t RX = 2;
-static const uint8_t TX = 3;
+static const uint8_t RX = 0;    // if use UART please set RX = 2  TX = 3
+static const uint8_t TX = 1;
 
 static const uint8_t SCL = 2;
 static const uint8_t SDA = 3;
